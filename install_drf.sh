@@ -8,7 +8,7 @@ fi
 
 PROJECT_NAME=$1
 APP_NAME=$2
-SCRIPT_DIR="$(dirname "$0")"
+SCRIPT_DIR="$(pwd)"
 
 # Step 1: Create a virtual environment in the parent directory
 cd ..
@@ -25,24 +25,23 @@ django-admin startproject $PROJECT_NAME
 cd $PROJECT_NAME
 
 # Step 4: Create the new app within the project directory
-django-admin startapp $APP_NAME $APP_NAME
+django-admin startapp $APP_NAME
 
-# Step 4: Modify settings.py
-echo "INSTALLED_APPS += ['$APP_NAME', 'rest_framework']" >> $PROJECT_NAME/$PROJECT_NAME/settings.py
-echo "REST_FRAMEWORK = {'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny']}" >> $PROJECT_NAME/$PROJECT_NAME/settings.py
+# Step 5: Modify settings.py
+echo "INSTALLED_APPS += ['$APP_NAME', 'rest_framework']" >> $PROJECT_NAME/settings.py
+echo "REST_FRAMEWORK = {'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.AllowAny']}" >> $PROJECT_NAME/settings.py
 
-# Step 5: Copy the template app files into the new app directory
-cp $SCRIPT_DIR/basic_api/* $PROJECT_NAME/$APP_NAME/
+# Step 6: Copy the template app files into the new app directory
+cp $SCRIPT_DIR/basic_api/* $APP_NAME/
 
-# Step 6: Modify main project's urls.py to include the new app's urls
-echo "from django.urls import include" >> $PROJECT_NAME/$PROJECT_NAME/urls.py
-echo "urlpatterns += [path('api/', include('$APP_NAME.urls'))]" >> $PROJECT_NAME/$PROJECT_NAME/urls.py
+# Step 7: Modify main project's urls.py to include the new app's urls
+echo "from django.urls import include" >> $PROJECT_NAME/urls.py
+echo "urlpatterns += [path('api/', include('$APP_NAME.urls'))]" >> $PROJECT_NAME/urls.py
 
-# Step 7: Add a basic model to the new app's models.py
-echo "class BasicModel(models.Model):" >> $PROJECT_NAME/$APP_NAME/models.py
-echo "    name = models.CharField(max_length=100)" >> $PROJECT_NAME/$APP_NAME/models.py
+# Step 8: Add a basic model to the new app's models.py
+echo "class BasicModel(models.Model):" >> $APP_NAME/models.py
+echo "    name = models.CharField(max_length=100)" >> $APP_NAME/models.py
 
-# Step 8: Migrate and start the server
-cd $PROJECT_NAME
+# Step 9: Migrate and start the server
 python manage.py migrate
 python manage.py runserver
