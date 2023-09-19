@@ -1,13 +1,13 @@
-# Django DRA Setup
+# Django DRF Setup Script
 
-This script sets up a Django project with Django REST Framework activated and starts the server.
+This script helps automate the process of setting up a Django project with Django Rest Framework (DRF).
 
-## Prerequisites:
+## Prerequisites
+- Ensure you have Python3 and pip installed.
+- The script should be located in `drfcookiecutter` directory where the `basic_api` templates reside.
 
-1. Ensure you have Python3 and `venv` module installed.
-2. Provide execute permission to the script: `chmod +x install_django.sh`.
-
-## Usage:
-
-Run the script with the desired app name as an argument:
-
+## Usage
+1. Navigate to the `drfcookiecutter` directory.
+2. Execute the setup script by running:
+   ```bash
+   ./install_drf.sh <project_name> <app_name>
