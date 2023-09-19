@@ -18,9 +18,14 @@ python3 -m venv venv
 source venv/bin/activate
 pip install django djangorestframework
 
-# Step 3: Create a new Django project and app
+# Step 3: Create a new Django project
 django-admin startproject $PROJECT_NAME
-django-admin startapp $APP_NAME $PROJECT_NAME/$APP_NAME
+
+# Change directory to the new project directory
+cd $PROJECT_NAME
+
+# Step 4: Create the new app within the project directory
+django-admin startapp $APP_NAME $APP_NAME
 
 # Step 4: Modify settings.py
 echo "INSTALLED_APPS += ['$APP_NAME', 'rest_framework']" >> $PROJECT_NAME/$PROJECT_NAME/settings.py
