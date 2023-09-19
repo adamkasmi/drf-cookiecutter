@@ -1,7 +1,3 @@
----
-
-### Modified `install_django.sh` Script:
-```bash
 #!/bin/bash
 
 # Check if arguments are provided
