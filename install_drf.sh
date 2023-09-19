@@ -1,3 +1,7 @@
+---
+
+### Modified `install_django.sh` Script:
+```bash
 #!/bin/bash
 
 # Check if arguments are provided
@@ -42,6 +46,12 @@ echo "urlpatterns += [path('api/', include('$APP_NAME.urls'))]" >> $PROJECT_NAME
 echo "class BasicModel(models.Model):" >> $APP_NAME/models.py
 echo "    name = models.CharField(max_length=100)" >> $APP_NAME/models.py
 
-# Step 9: Migrate and start the server
+# Step 9: Create and Apply Migrations
+python manage.py makemigrations $APP_NAME
 python manage.py migrate
-python manage.py runserver
+
+# Step 10: Start the Django development server
+python manage.py runserver &
+
+# Open a web browser to the API endpoint
+xdg-open 'http://127.0.0.1:8000/api/basic/'
