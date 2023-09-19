@@ -29,7 +29,15 @@ echo "REST_FRAMEWORK = {'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissio
 # Step 5: Copy the template app files into the new app directory
 cp $SCRIPT_DIR/basic_api/* $PROJECT_NAME/$APP_NAME/
 
-# Step 6: Migrate and start the server
+# Step 6: Modify main project's urls.py to include the new app's urls
+echo "from django.urls import include" >> $PROJECT_NAME/$PROJECT_NAME/urls.py
+echo "urlpatterns += [path('api/', include('$APP_NAME.urls'))]" >> $PROJECT_NAME/$PROJECT_NAME/urls.py
+
+# Step 7: Add a basic model to the new app's models.py
+echo "class BasicModel(models.Model):" >> $PROJECT_NAME/$APP_NAME/models.py
+echo "    name = models.CharField(max_length=100)" >> $PROJECT_NAME/$APP_NAME/models.py
+
+# Step 8: Migrate and start the server
 cd $PROJECT_NAME
 python manage.py migrate
 python manage.py runserver
